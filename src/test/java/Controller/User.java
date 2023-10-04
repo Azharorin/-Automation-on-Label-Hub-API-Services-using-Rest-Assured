@@ -4,6 +4,7 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import model.UserModel;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
@@ -11,23 +12,27 @@ import org.testng.annotations.Test;
 import setup.Setup;
 
 import java.io.IOException;
-import java.util.Properties;
 
 import static io.restassured.RestAssured.given;
 
-public class MyApiCallingLogin extends Setup {
+public class User extends Setup {
+
+    public User() throws IOException {
+        initConfig();
+    }
     //Properties  prop;
    // MyApiCallingLogin myApiCallingLogin;
 
-    @Test
+
     public void doLogin() throws ConfigurationException, IOException {
+        UserModel userModel=new UserModel("admin@gigatech.com","Abc@123");
 
         //myApiCallingLogin= new MyApiCallingLogin();
        // myApiCallingLogin.readConfig();
         RestAssured.baseURI= prop.getProperty("baseURL");
 
         String grantType = "password";
-        String username = "admin@gigatech.com";
+        String username = "";
         String password = "Abc@123";
         String scope = "scope";
         String clientId = "client_id";
@@ -37,8 +42,9 @@ public class MyApiCallingLogin extends Setup {
 
                 .accept(ContentType.JSON)
                 .formParam("grant_type", grantType)
-                .formParam("username", username)
-                .formParam("password", password)
+               // .formParam(userModel.toString())
+                .formParam("username", userModel.username)
+                .formParam("password", userModel.password)
                 .formParam("scope", scope)
                 .formParam("client_id", clientId)
                 .formParam("client_secret", clientSecret)
@@ -66,7 +72,7 @@ public class MyApiCallingLogin extends Setup {
 
 
     }
-    @Test
+
     public void getUserme() throws IOException {
        //  myApiCallingLogin=new MyApiCallingLogin();
         // myApiCallingLogin.readConfig();

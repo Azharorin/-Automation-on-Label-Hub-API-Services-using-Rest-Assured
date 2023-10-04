@@ -1,31 +1,30 @@
+package Controller;
+
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
-import org.junit.jupiter.api.Test;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import org.testng.annotations.Test;
+import setup.Setup;
+
 import java.io.IOException;
 import java.util.Properties;
 
-import static io.restassured.RestAssured.expect;
 import static io.restassured.RestAssured.given;
 
-public class MyApiCallingLogin {
-    Properties  prop;
-    MyApiCallingLogin myApiCallingLogin;
+public class MyApiCallingLogin extends Setup {
+    //Properties  prop;
+   // MyApiCallingLogin myApiCallingLogin;
 
     @Test
-
-
     public void doLogin() throws ConfigurationException, IOException {
 
-        myApiCallingLogin= new MyApiCallingLogin();
-        myApiCallingLogin.readConfig();
-        RestAssured.baseURI= myApiCallingLogin.prop.getProperty("baseURL");
+        //myApiCallingLogin= new MyApiCallingLogin();
+       // myApiCallingLogin.readConfig();
+        RestAssured.baseURI= prop.getProperty("baseURL");
 
         String grantType = "password";
         String username = "admin@gigatech.com";
@@ -69,57 +68,47 @@ public class MyApiCallingLogin {
     }
     @Test
     public void getUserme() throws IOException {
-        myApiCallingLogin=new MyApiCallingLogin();
-        myApiCallingLogin.readConfig();
-     RestAssured.baseURI= myApiCallingLogin.prop.getProperty("baseURL");
-     Response response= RestAssured.given()
+       //  myApiCallingLogin=new MyApiCallingLogin();
+        // myApiCallingLogin.readConfig();
+         RestAssured.baseURI= prop.getProperty("baseURL");
+         Response response= RestAssured.given()
              .accept(ContentType.JSON)
              //.header("Authorization",myApiCallingLogin.prop.getProperty("token"))
-             .header("Authorization", "Bearer " + myApiCallingLogin.prop.getProperty("token"))
+             .header("Authorization", "Bearer " + prop.getProperty("token"))
 
              .when()
              .get("/api/v1/users/me")
              .then()
-             .extract().response();
+             //.extract().response();
 
-        System.out.println("Response Status Code: " + response.getStatusCode());
-        System.out.println("Response Body: " + response.getBody().asString());
+
             // .assertThat().statusCode(200).extract().response();
-         //.assertThat().statusCode(200).extract().response();
+            .assertThat().statusCode(200).extract().response();
+         System.out.println("Response Status Code: " + response.getStatusCode());
+         System.out.println("Response Body: " + response.getBody().asString());
 
         JsonPath jsonPath= response.jsonPath();
-     String name= jsonPath.get("full_name");
-     System.out.println(name);
+        String name= jsonPath.get("full_name");
+        System.out.println(name);
 
 
     }
 
     public static void saveEnv(String key, String value) throws ConfigurationException {
         PropertiesConfiguration config= new PropertiesConfiguration("./src/test/resources/Config.properties");
-
-
         config.setProperty(key,value);
         config.save();
 
 
     }
 
-//    public void saveBearerToken(String token) throws ConfigurationException {
-//        PropertiesConfiguration config = new PropertiesConfiguration("./src/test/resources/Config.properties");
-//        config.setProperty("bearerToken", token);
-//        config.save();
-//    }
+
     public void readConfig() throws IOException {
-        prop= new Properties();
-        FileInputStream file= new FileInputStream("./src/test/resources/Config.properties");
-        prop.load(file);
+
 
 
     }
     public static void main(String[] args) throws IOException {
-
-       // String token= myApiCallingLogin.prop.getProperty("token");
-       // System.out.println(token);
 
 
 

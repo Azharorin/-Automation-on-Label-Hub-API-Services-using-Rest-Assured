@@ -100,6 +100,11 @@ public class User extends Setup {
 
     }
 
+
+    public void createProject(){
+
+    }
+
     public static void saveEnv(String key, String value) throws ConfigurationException {
         PropertiesConfiguration config= new PropertiesConfiguration("./src/test/resources/Config.properties");
         config.setProperty(key,value);

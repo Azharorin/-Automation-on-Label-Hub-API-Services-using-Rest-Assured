@@ -1,7 +1,5 @@
 package model;
 
-import projectCreate.Task;
-
 import java.util.List;
 
 public class ProjectCreate {

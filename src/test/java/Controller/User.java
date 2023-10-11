@@ -90,7 +90,7 @@ public class User extends Setup {
 
             // .assertThat().statusCode(200).extract().response();
             .assertThat().statusCode(200).extract().response();
-         System.out.println("Response Status Code: " + response.getStatusCode());
+          System.out.println("Response Status Code: " + response.getStatusCode());
          System.out.println("Response Body: " + response.getBody().asString());
 
         JsonPath jsonPath= response.jsonPath();

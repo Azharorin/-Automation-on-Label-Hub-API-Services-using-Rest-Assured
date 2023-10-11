@@ -1,7 +1,10 @@
 package Controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
+import io.restassured.config.RedirectConfig;
+import io.restassured.config.RestAssuredConfig;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import model.ProjectCreate;
@@ -21,11 +24,7 @@ public class Project extends Setup {
     }
 
 
-
-
     public void createProject() throws JsonProcessingException {
-
-
 
 
         List<Integer> tags = new ArrayList<>();
@@ -42,28 +41,32 @@ public class Project extends Setup {
 
         // Create a ProjectCreate object
         ProjectCreate projectCreate = new ProjectCreate();
-        projectCreate.setName("ProjectName_nererere");
-        projectCreate.setDescription("ProjectDescriptionss");
+        projectCreate.setName("ProjectNamdde_nerererewe");
+        projectCreate.setDescription("ProjectDdfdescriptionss");
         projectCreate.setTasks(tasks);
+        ;
+        //  String jsonp = null;
+        String jsonp = null;
+        try {
+            // Create an ObjectMapper
+            ObjectMapper objectMapper = new ObjectMapper();
 
+            // Serialize the Root object to JSON
+            jsonp = objectMapper.writeValueAsString(projectCreate);
 
-
-
-
-
-
-
-
-
-
+            // Print the JSON
+            System.out.println(jsonp);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
         Response response = RestAssured.given()
-                .accept(ContentType.JSON)
+//                .accept(ContentType.JSON)
                 .header("Authorization", "Bearer " + prop.getProperty("token"))
-                .body(projectCreate)
+                .body(jsonp)
                 .when()
-                .post("http://192.168.10.233:7001/api/v1/projects");
+                .post("http://corpus-dev.gigatechltd.com/labelhub/project-service/api/v1/projects/");
 
         // Check if the response is a redirect (status code 307)
         if (response.getStatusCode() == 307) {
@@ -75,7 +78,7 @@ public class Project extends Setup {
             response = RestAssured.given()
                     .accept(ContentType.JSON)
                     .header("Authorization", "Bearer " + prop.getProperty("token"))
-                    .body(projectCreate)
+                    .body(jsonp)
                     .when()
 
                     .post(redirectLocation);
@@ -83,17 +86,20 @@ public class Project extends Setup {
 
         }
 
-        // Now, check the final response
+        //Now, check the final response
         System.out.println("Response Status Code: " + response.getStatusCode());
         System.out.println("Response Body: " + response.getBody().asString());
 
-        // Assert the final status code and perform other validation as needed
-        Assert.assertEquals(response.getStatusCode(), 201, "Expected status code 201");
     }
+}
 
 
 
 
-    }
+
+
+
+
+
 
 

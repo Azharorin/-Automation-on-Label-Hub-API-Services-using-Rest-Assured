@@ -1,11 +1,19 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 public class ProjectCreate {
+    @JsonProperty("name")
+
 
     public  String name;
- public String description;
+    @JsonProperty("description")
+
+    public String description;
+    @JsonProperty("tasks")
+
     public List<Task> tasks;
 
     public ProjectCreate() {

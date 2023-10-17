@@ -23,9 +23,9 @@ public class CreateUserController extends Setup {
     public void doCreateUser(){
         Response response;
 
-       CreateUser user= new CreateUser("allnu","aini@gmail.com",2,"01819095832","2003-10-11","Male","DHAKA","BSC",2,"Abc@123");
+       CreateUser user= new CreateUser("allnus","aqi@gmail.com",2,"01819095832","2003-10-11","Male","DHAKA","BSC",2,"Abc@123");
 
-        RestAssured.baseURI= prop.getProperty("baseURL");
+        //RestAssured.baseURI= prop.getProperty("baseURL");
         //System.out.println(user);
 //        Response response= RestAssured.given()
 //                .accept(ContentType.JSON)
@@ -62,14 +62,13 @@ public class CreateUserController extends Setup {
                     .config(config)
 
                     .when()
-                    .post("api/v1/users");
-
-                    /*.then()
-                    .assertThat().statusCode(201).extract().response();*/
+                    .post("http://192.168.10.233:7012/api/v1/users/")
+            .then()
+                    .assertThat().statusCode(200).extract().response();
             // Send a POST request with Rest Assured
             System.out.println("Response Status Code: " + response.getStatusCode());
             System.out.println("Response Body: " + response.getBody().asString());
-            if (response.getStatusCode() == 307) {
+           /* if (response.getStatusCode() == 307) {
                 // Follow the redirect by getting the 'Location' header
                 String redirectLocation = response.getHeader("Location");
                 System.out.println("Redirect Location: " + redirectLocation);
@@ -83,10 +82,10 @@ public class CreateUserController extends Setup {
 
                         .post(redirectLocation);
 
+*/
 
 
 
-            }
 
 
 

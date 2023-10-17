@@ -11,6 +11,7 @@ public class UserTestRunner {
     public void doLogin() throws ConfigurationException, IOException {
         User user=new User();
         user.doLogin();
+        user.getUserme();
 
 
     }
@@ -18,7 +19,8 @@ public class UserTestRunner {
 
     public void getAdmininfo() throws IOException {
         User user = new User();
-        user.getUserme();
+
+
 
     }
 

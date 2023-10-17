@@ -15,14 +15,14 @@ public class TagCreateTestRunner {
 //        user.doLogin();
 
         TagCreation tagCreation = new TagCreation();
-        tagCreation.setName("prodss");
-        tagCreation.setDescription("not null");
-        tagCreation.setCategory("dshdsuj");
-        tagCreation.setTask_id(1);
-        tagCreation.setShort_form("promax");
+        tagCreation.setName("POS");
+        tagCreation.setDescription("Parts OF Speech");
+        tagCreation.setCategory("Parts OF SPEECH");
+        tagCreation.setTask_id(2);
+        tagCreation.setShort_form("pos1");
 
         TagController tagController = new TagController();
-        tagController.createTag1(tagCreation);
+        tagController.createTag(tagCreation);
 
     }
 

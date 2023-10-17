@@ -29,7 +29,7 @@ public class User extends Setup {
 
         //myApiCallingLogin= new MyApiCallingLogin();
        // myApiCallingLogin.readConfig();
-        RestAssured.baseURI= prop.getProperty("baseURL");
+       // RestAssured.baseURI= prop.getProperty("baseURL");
 
         String grantType = "password";
         String username = "";
@@ -49,7 +49,7 @@ public class User extends Setup {
                 .formParam("client_id", clientId)
                 .formParam("client_secret", clientSecret)
                 .when()
-                .post("/api/v1/login/access-token")
+                .post("http://192.168.10.233:7012/api/v1/login/access-token")
                 .then()
                 .assertThat().statusCode(200).extract().response();
         System.out.println(response.asString());
@@ -61,11 +61,6 @@ public class User extends Setup {
 
          System.out.println(token);
 
-
-
-
-
-
         saveEnv("token",token);
        // saveBearerToken(token);
 
@@ -76,14 +71,14 @@ public class User extends Setup {
     public void getUserme() throws IOException {
        //  myApiCallingLogin=new MyApiCallingLogin();
         // myApiCallingLogin.readConfig();
-         RestAssured.baseURI= prop.getProperty("baseURL");
+         //RestAssured.baseURI= prop.getProperty("baseURL");
          Response response= RestAssured.given()
              .accept(ContentType.JSON)
              //.header("Authorization",myApiCallingLogin.prop.getProperty("token"))
              .header("Authorization", "Bearer " + prop.getProperty("token"))
 
              .when()
-             .get("/api/v1/users/me")
+             .get("http://192.168.10.233:7012/api/v1/users/me")
              .then()
              //.extract().response();
 

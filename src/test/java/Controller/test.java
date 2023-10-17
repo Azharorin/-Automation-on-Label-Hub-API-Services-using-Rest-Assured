@@ -16,23 +16,7 @@ import java.util.List;
 public class test {
 
 
-    package Controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.restassured.RestAssured;
-import io.restassured.config.RedirectConfig;
-import io.restassured.config.RestAssuredConfig;
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
-import model.ProjectCreate;
-import org.testng.Assert;
-import model.Task;
-import setup.Setup;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
     public class Project extends Setup {
 
